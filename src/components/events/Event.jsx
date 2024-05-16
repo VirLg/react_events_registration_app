@@ -7,11 +7,11 @@ const Event = ({ data }) => {
     return (
       <div
         key={idx}
-        className=" items-center pl-6 pr-6 pt-2 pb-2 border-2 m-3 h-[110px] bg-gray-50 max-w-[300px] ">
+        className=" pl-6 pr-6 pt-2 pb-2 border-2 m-3 h-[110px] bg-gray-50 max-w-[300px] ">
         <h2 style={{ color: "red" }}>Title</h2>
         <p className="text-2xl">description</p>
-        <ul className="flex justify-between ">
-          <NavLink to="/api/event/add">Registration</NavLink>
+        <ul className="flex gap-10">
+          <NavLink to="/api/events/add">Registration</NavLink>
           <NavLink to="/api/events/participants">View</NavLink>
         </ul>
       </div>
