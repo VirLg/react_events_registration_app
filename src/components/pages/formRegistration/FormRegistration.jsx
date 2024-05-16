@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const FormRegistration = () => {
   // const [addCar] = useAddCarMutation();
@@ -10,7 +11,8 @@ const FormRegistration = () => {
   //   addCar(data);
   // };
   return (
-    <div className=" p-20 outline  outline-2 w-[700px]	h-[900px]	m-auto mt-20 bg-inc-z50">
+    <div className="p-20 outline  outline-2 w-[700px]	h-[900px]	m-auto mt-20 bg-inc-z50">
+      <NavLink to="/">Home</NavLink>
       <Formik
         initialValues={{ name: "", email: "", date: "" }}
         // validationSchema={Yup.object({
