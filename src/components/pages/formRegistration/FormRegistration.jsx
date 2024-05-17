@@ -1,36 +1,38 @@
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAddEventMutation } from "../../redux/rtkQuery/rtkQuery";
 
 const FormRegistration = () => {
-  // const [addCar] = useAddCarMutation();
-
-  // useAddCarMutation();
-  // const valueForm = data => {
-  //   console.log('data', data);
-  //   addCar(data);
-  // };
+  const [addEvent, { data, isLoading, error, isSuccess }] =
+    useAddEventMutation();
+  console.log("error", data);
+  const valueForm = (data) => {
+    console.log("data", data);
+    addEvent(data);
+  };
   return (
-    <div className="p-20 outline  outline-2 w-[700px]	h-[900px]	m-auto mt-20 bg-inc-z50">
-      <NavLink to="/">Home</NavLink>
+    <div className="flex p-20 outline  outline-2 w-[700px]	h-[900px]	m-auto mt-20 bg-inc-z50">
+      <NavLink
+        to="/"
+        className="inline-block w-[120px] h-[30px] outline outline-2 mb-[40px]">
+        Home
+      </NavLink>
+
       <Formik
-        initialValues={{ name: "", email: "", date: "" }}
-        // validationSchema={Yup.object({
-
-        //   rentalConditions: Yup.string()
-        //     .max(20, 'Must be 20 characters or less')
-        //     .required('Required'),
-        //   minimumAge: Yup.string()
-        //     .max(20, 'Must be 20 characters or less')
-        //     .required('Required'),
-        //   mileage: Yup.string()
-        //     .max(15, 'Must be 15 characters or less')
-        //     .required('Required'),
-        // })}
-
-        onSubmit={(values) => console.log("values", values)}>
-        <Form style={{ display: "flex", flexDirection: "column" }}>
-          <label className="text-left mb-2">Name</label>
+        initialValues={{ name: "", email: "", date: "", picked: "" }}
+        onSubmit={(values, { resetForm }) => {
+          console.log("values", values);
+          valueForm(values);
+          resetForm();
+        }}>
+        <Form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "50px",
+          }}>
+          <label className="text-left mb-2">Full name</label>
           <Field className="outline outline-2" name="name" type="name" />
           <ErrorMessage name="name" />
 
@@ -42,11 +44,55 @@ const FormRegistration = () => {
           <Field className="outline outline-2" name="date" type="date" />
           <ErrorMessage name="date" />
 
+          <h3 id="my-radio-group" className="mt-6 mb-4">
+            Where did you hear this event?
+          </h3>
+          <div
+            role="group"
+            aria-labelledby="my-radio-group"
+            className="flex justify-start gap-10">
+            <label>
+              <Field
+                type="radio"
+                name="picked"
+                value="social"
+                style={{ marginRight: "4px" }}
+              />
+              Social media
+            </label>
+            <label>
+              <Field
+                type="radio"
+                name="picked"
+                value="friends"
+                style={{ marginRight: "4px" }}
+              />
+              Friends
+            </label>
+            <label>
+              <Field
+                type="radio"
+                name="picked"
+                value="myself"
+                style={{ marginRight: "4px" }}
+              />
+              Found myself
+            </label>
+          </div>
+
+          <button type="submit">Submit</button>
+
           <button
             className="outline outline-2 mt-[80px] w-[120px]"
             type="submit">
             Submit
           </button>
+          {error && (
+            <p className="mt-[50px] text-red-400 w-[300px]">
+              {error.data.message}
+            </p>
+          )}
+          {data && <p>`Event {data.name} Created`</p>}
         </Form>
       </Formik>
     </div>

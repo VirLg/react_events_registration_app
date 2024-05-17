@@ -15,19 +15,26 @@ export const eventsApi = createApi({
       providesTags: ["TagEvent"],
     }),
 
-    getParticipants: (builder) => ({
-      getEvents: builder.query({
-        query: () => `/participants`,
-        providesTags: ["TagEvent"],
+    // getParticipants: (builder) => ({
+    //   getEvents: builder.query({
+    //     query: () => `/participants`,
+    //     providesTags: ["TagEvent"],
+    //   }),
+
+    //      tagTypes: ["TagEvent"],
+    //   endpoints: (builder) => ({
+    getParticipants: builder.query({
+      query: () => `/participants`,
+      providesTags: ["TagEvent"],
+    }),
+
+    addEvent: builder.mutation({
+      query: (body) => ({
+        url: `/add`,
+        method: "POST",
+        body,
       }),
-      addEvent: builder.mutation({
-        query: (body) => ({
-          url: `/add`,
-          method: "POST",
-          body,
-        }),
-        invalidatesTags: ["TagEvent"],
-      }),
+      invalidatesTags: ["TagEvent"],
     }),
   }),
 });
