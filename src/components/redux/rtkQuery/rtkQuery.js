@@ -6,7 +6,7 @@ export const eventsApi = createApi({
   reducerPath: "eventsApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:4000/api/events`,
+    baseUrl: `https://node-js-mongobd-events-registration-app.onrender.com/api/events`,
   }),
   tagTypes: ["TagEvent"],
   endpoints: (builder) => ({
