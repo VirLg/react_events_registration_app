@@ -10,14 +10,20 @@ import { eventList, participantsList } from "../../redux/slice";
 import Pagination from "../../pagination/Pagination";
 
 const EventsParticipants = () => {
-  const [render, setRender] = useState([]);
   const dispatch = useDispatch();
   const { data: fetchedEvents, error, isLoading } = useGetParticipantsQuery();
   const selectorParticipants = useSelector(
     (state) => state.eventState.participants
   );
   const selectorPagination = useSelector(selectorPaginationArr);
-  console.log("first", selectorPagination);
+
+  const handleSort = (selectorParticipants) => {
+    console.log("!!!!!!!");
+    const res = [...selectorParticipants].toSorted((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    console.log("res", res);
+  };
   useEffect(() => {
     if (fetchedEvents) {
       dispatch(participantsList(fetchedEvents));
@@ -46,7 +52,11 @@ const EventsParticipants = () => {
           className="inline-block w-[120px] h-[30px] outline outline-2 mb-[40px]">
           Home
         </NavLink>
-
+        <button
+          className="inline-block w-[120px] h-[30px] outline outline-2 mb-[40px]"
+          onClick={() => handleSort()}>
+          Sorted Events
+        </button>
         <div className="flex flex-wrap">
           {a.map((el, idx) => {
             return (
