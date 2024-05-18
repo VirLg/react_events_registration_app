@@ -1,3 +1,4 @@
+// src/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 // import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -10,8 +11,9 @@ const eventSlice = createSlice({
     // searchValue: null,
   },
   reducers: {
-    eventList(state, action) {
-      return (state.events = [...action.payload]);
+    eventList: (state, action) => {
+      console.log("action", action.payload);
+      state.events = action.payload;
     },
     // searched(state, action) {
     //   state.searchValue = action.payload;
