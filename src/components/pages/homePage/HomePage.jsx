@@ -1,5 +1,6 @@
 import React from "react";
 import Event from "../../events/Event";
+import Pagination from "../../pagination/Pagination";
 
 const HomePage = () => {
   return (

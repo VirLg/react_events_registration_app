@@ -1,24 +1,54 @@
-import React, { useState } from "react";
-import { useGetParticipantsQuery } from "../../redux/rtkQuery/rtkQuery";
+import React, { useEffect, useState } from "react";
+import {
+  useGetEventsQuery,
+  useGetParticipantsQuery,
+} from "../../redux/rtkQuery/rtkQuery";
 import { NavLink } from "react-router-dom";
-import { selectorEvent } from "../../redux/selector";
-import { useSelector } from "react-redux";
+import { selectorEvent, selectorPaginationArr } from "../../redux/selector";
+import { useDispatch, useSelector } from "react-redux";
+import { eventList, participantsList } from "../../redux/slice";
+import Pagination from "../../pagination/Pagination";
 
 const EventsParticipants = () => {
-  const { data, error, isLoading } = useGetParticipantsQuery();
-  const events = useSelector((state) => state.eventState);
-  console.log("events", events);
-  return (
-    <div className=" p-20 outline  outline-2 w-[1331px]	h-[900px]	m-auto mt-20 bg-inc-z50">
-      <NavLink
-        to="/"
-        className="inline-block w-[120px] h-[30px] outline outline-2 mb-[40px]">
-        Home
-      </NavLink>
+  const [render, setRender] = useState([]);
+  const dispatch = useDispatch();
+  const { data: fetchedEvents, error, isLoading } = useGetParticipantsQuery();
+  const selectorParticipants = useSelector(
+    (state) => state.eventState.participants
+  );
+  const selectorPagination = useSelector(selectorPaginationArr);
+  console.log("first", selectorPagination);
+  useEffect(() => {
+    if (fetchedEvents) {
+      dispatch(participantsList(fetchedEvents));
+    }
+  }, [fetchedEvents, dispatch]);
 
-      <div className="flex flex-wrap">
-        {data &&
-          data.map((el, idx) => {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  let a = selectorPagination;
+
+  if (a.length > 0) {
+    a = selectorPagination;
+  } else {
+    a = selectorParticipants;
+  }
+  return (
+    <>
+      <div className=" p-20 outline  outline-2 w-[1331px]	h-[900px]	m-auto mt-20 bg-inc-z50">
+        <NavLink
+          to="/"
+          className="inline-block w-[120px] h-[30px] outline outline-2 mb-[40px]">
+          Home
+        </NavLink>
+
+        <div className="flex flex-wrap">
+          {a.map((el, idx) => {
             return (
               <div
                 key={idx}
@@ -28,8 +58,10 @@ const EventsParticipants = () => {
               </div>
             );
           })}
+        </div>
+        <Pagination />
       </div>
-    </div>
+    </>
   );
 };
 

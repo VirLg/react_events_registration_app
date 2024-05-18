@@ -7,30 +7,25 @@ const eventSlice = createSlice({
   initialState: {
     modal: false,
     events: [],
+    participants: [],
+    paginationArr: [],
     // favorite: [],
     // searchValue: null,
   },
   reducers: {
     eventList: (state, action) => {
-      console.log("action", action.payload);
       state.events = action.payload;
     },
-    // searched(state, action) {
-    //   state.searchValue = action.payload;
-    // },
-    // favorite(state, action) {
-    //   const unic = state.favorite.find(el => el._id === action.payload._id);
-    //   if (unic) {
-    //     state.favorite = state.favorite.filter(el => el._id !== unic._id);
-    //     Notify.success('Delete with favorite');
-    //   } else {
-    //     state.favorite = [...state.favorite, action.payload];
-    //     Notify.success('Add to favorite');
-    //   }
-    // },
+    participantsList: (state, action) => {
+      state.participants = action.payload;
+    },
+    paginationList: (state, action) => {
+      state.paginationArr = action.payload;
+    },
   },
 });
 
-export const { eventList } = eventSlice.actions;
+export const { eventList, participantsList, paginationList } =
+  eventSlice.actions;
 
 export const eventReducer = eventSlice.reducer;

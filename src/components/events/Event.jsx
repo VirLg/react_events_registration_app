@@ -1,36 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
+
 import { useGetEventsQuery } from "../redux/rtkQuery/rtkQuery";
-import { useDispatch, useSelector } from "react-redux";
-import { eventList } from "../redux/slice";
 
 const Event = () => {
   // data = [1, 2, 3, 4, 5, 6, 7, 8];
-  // const { data, error, isLoading } = useGetEventsQuery();
+  const { data } = useGetEventsQuery();
   // const events = useSelector((state) => state.eventState);
   // console.log("events", events);
 
-  const dispatch = useDispatch();
-  const events = useSelector((state) => state.eventState.events);
-  const { data: fetchedEvents, error, isLoading } = useGetEventsQuery();
-
-  useEffect(() => {
-    if (fetchedEvents) {
-      dispatch(eventList(fetchedEvents));
-    }
-  }, [fetchedEvents, dispatch]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   return (
-    events &&
-    events.map((el, idx) => {
+    data &&
+    data.map((el, idx) => {
       return (
         <div
           key={idx}
